@@ -1,0 +1,90 @@
+{
+  "default_language": "English",
+  "default_communication_preferences": {
+    "notifications": {
+      "email": true,
+      "sms": false,
+      "push": true
+    },
+    "language_preferences": "English",
+    "gender_preference": "neutral",
+    "accent_preference": "neutral"
+  },
+  "global_settings": {
+    "backup_interval": 86400,
+    "update_interval": 604800,
+    "data_retention_period": 31536000
+  },
+  "visual_theme": {
+    "primary_color": "#4A148C",
+    "secondary_color": "#7C4DFF",
+    "background_color": "#FFFFFF",
+    "font_color": "#000000",
+    "font_family": "Arial, sans-serif",
+    "font_size": "14px"
+  },
+  "api_keys": {
+    "speech_recognition": "your_speech_recognition_api_key",
+    "text_to_speech": "your_text_to_speech_api_key",
+    "image_generation": "your_image_generation_api_key",
+    "video_generation": "your_video_generation_api_key",
+    "translation": "your_translation_api_key",
+    "email_service": "your_email_service_api_key",
+    "sms_service": "your_sms_service_api_key"
+  },
+  "database_connection": {
+    "host": "your_database_host",
+    "port": "your_database_port",
+    "username": "your_database_username",
+    "password": "your_database_password",
+    "database_name": "your_database_name"
+  },
+  "encryption_settings": {
+    "encryption_algorithm": "AES",
+    "encryption_key_length": 256,
+    "encryption_mode": "GCM",
+    "encryption_key_file": "encryption_key.txt"
+  },
+  "free_account_limitations": {
+    "max_image_quality": "medium",
+    "max_video_quality": "medium",
+    "conversation_history": 30
+  },
+  "premium_tiers": [
+    {
+      "tier_name": "Silver",
+      "price": 9.99,
+      "max_image_quality": "high",
+      "max_video_quality": "high",
+      "conversation_history": 90,
+      "personalized_experience": true,
+      "targeted_content": true
+    },
+    {
+      "tier_name": "Gold",
+      "price": 19.99,
+      "max_image_quality": "ultra",
+      "max_video_quality": "ultra",
+      "conversation_history": 365,
+      "personalized_experience": true,
+      "targeted_content": true,
+      "priority_support": true
+    }
+  ],
+  "legal_restrictions": {
+    "prohibited_actions": [
+      "hate_speech",
+      "violence_promotion",
+      "harassment",
+      "illegal_activities"
+    ],
+    "prohibited_keywords": [
+      "list_of_prohibited_keywords"
+    ]
+  },
+  "privacy_protocols": {
+    "data_encryption": true,
+    "anonymize_user_data": true,
+    "cookie_policy": "strict"
+  }
+}

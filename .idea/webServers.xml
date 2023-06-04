@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="86456390-e072-42b6-85c3-279cfeac86e9" name="72.167.45.189" url="http://fultonarts.com">
+        <fileTransfer accessType="SFTP" host="72.167.45.189" port="22" sshConfigId="9fda5b46-3a06-4098-84bf-2f02c8e9323d" sshConfig="root@72.167.45.189:22 password">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

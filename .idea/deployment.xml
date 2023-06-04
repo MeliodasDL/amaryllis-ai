@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PublishConfigData" autoUpload="On explicit save action" serverName="72.167.45.189" createEmptyFolders="true" filePermissions="420" folderPermissions="493" remoteFilesAllowedToDisappearOnAutoupload="false" autoUploadExternalChanges="true">
+    <serverData>
+      <paths name="72.167.45.189">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/home/yvkjfq0pan6o/public_html/amaryllis" local="$PROJECT_DIR$" web="amaryllis" />
+          </mappings>
+        </serverdata>
+      </paths>
+    </serverData>
+    <option name="myAutoUpload" value="ON_EXPLICIT_SAVE" />
+  </component>
+</project>
