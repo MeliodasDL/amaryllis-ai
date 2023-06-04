@@ -2,26 +2,12 @@
 from cryptography.fernet import Fernet
 import base64
 import os
-
+from config import get_config_value
 
 class Encryption:
     def __init__(self):
-        self.key = self.load_key()
+        self.key = get_config_value("ENCRYPTION_KEY")
         self.fernet = Fernet(self.key)
-
-    def load_key(self):
-        """
-        Loads the encryption key from a file or generates a new one if it doesn't exist.
-        """
-        key_file = "encryption_key.key"
-        if os.path.exists(key_file):
-            with open(key_file, "rb") as file:
-                key = file.read()
-        else:
-            key = base64.urlsafe_b64encode(os.urandom(32))
-            with open(key_file, "wb") as file:
-                file.write(key)
-        return key
 
     def encrypt(self, data):
         """

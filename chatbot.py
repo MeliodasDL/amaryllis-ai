@@ -1,34 +1,3 @@
-import os
-import sys
-import time
-import datetime
-import random
-import hashlib
-import json
-import requests
-from PIL import Image
-import tensorflow as tf
-import keras
-import sklearn
-import numpy as np
-import pandas as pd
-import matplotlib.pyplot as plt
-import seaborn as sns
-import nltk
-import spacy
-import gensim
-import pyaudio
-import speech_recognition as sr
-from googletrans import Translator
-import pyttsx3
-from twilio.rest import Client
-from sendgrid import SendGridAPIClient
-from sendgrid.helpers.mail import Mail
-from flask import Flask, render_template, request, redirect, url_for, flash
-from django.urls import path
-from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QVBoxLayout, QGridLayout, QPushButton, QLineEdit, QMessageBox
-import wx
-import tkinter as tk
 from database import Database
 from user_data import UserData
 from error_handling import ErrorHandling
@@ -38,7 +7,6 @@ from natural_language_processing import NaturalLanguageProcessing
 from communication_preferences import CommunicationPreferences
 from image_generation import ImageGeneration
 from video_generation import VideoGeneration
-
 
 class Chatbot:
     def __init__(self):

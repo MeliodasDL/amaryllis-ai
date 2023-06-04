@@ -1,5 +1,3 @@
-import json
-
 from chatbot import Chatbot
 from database import Database
 from user_interface import UserInterface
@@ -21,17 +19,33 @@ from communication_preferences import CommunicationPreferences
 from legal_restrictions import LegalRestrictions
 from privacy_protocols import PrivacyProtocols
 from user_experience_data import UserExperienceData
+from config import get_config_value
 
 
 def run_application():
-    chatbot = Chatbot()
-    database = Database()
+    # Initialize classes with necessary configuration values
+    database = Database(
+        host=get_config_value("DATABASE_HOST"),
+        port=get_config_value("DATABASE_PORT"),
+        user=get_config_value("DATABASE_USER"),
+        password=get_config_value("DATABASE_PASSWORD"),
+        database_name=get_config_value("DATABASE_NAME")
+    )
     user_interface = UserInterface()
+    chatbot = Chatbot(
+    api_key_1=get_config_value("API_KEY_1"),
+    api_key_2=get_config_value("API_KEY_2"),
+    email_api_key=get_config_value("EMAIL_API_KEY"),
+    email_from=get_config_value("EMAIL_FROM"),
+    twilio_account_sid=get_config_value("TWILIO_ACCOUNT_SID"),
+    twilio_auth_token=get_config_value("TWILIO_AUTH_TOKEN"),
+    twilio_phone_number=get_config_value("TWILIO_PHONE_NUMBER")
+    )
     backup = Backup()
     debug = Debug()
     security = Security()
     encryption = Encryption()
-    user_data = UserData()
+    user_data = UserData(database=database)
     error_handling = ErrorHandling()
     update = Update()
     feedback = Feedback()

@@ -85,3 +85,60 @@ if __name__ == "__main__":
     print(account_settings.upgrade_account("premium"))
     print(account_settings.disable_account())
     print(account_settings.enable_account())
+
+
+    def update_account_settings(self, settings):
+        """
+        Update the user's account settings.
+         :param settings: A dictionary containing the updated settings.
+        :return: A message indicating the success or failure of the operation.
+        """
+        # Update the user's settings in the database
+        self.db.update_user_settings(self.user_id, settings)
+        return "Account settings updated successfully."
+
+    def upgrade_account(self, account_type):
+        """
+        Upgrade the user's account to a premium tier.
+         :param account_type: The premium account type the user wants to upgrade to.
+        :return: A message indicating the success or failure of the operation.
+        """
+        # Verify the user's current account type
+        if self.user_data['user_account_type'] == 'free':
+            # Update the user's account type in the database
+            self.db.update_user_account_type(self.user_id, account_type)
+            return f"Account upgraded to {account_type} successfully."
+        else:
+            return "Your account is already a premium account."
+
+    def disable_account(self):
+        """
+        Disable the user's account.
+         :return: A message indicating the success or failure of the operation.
+        """
+        if self.user_data['user_account_status'] != 'active':
+            return "Your account is already disabled."
+        # Update the user's account status in the database
+        self.db.update_user_account_status(self.user_id, 'disabled')
+        return "Account disabled successfully."
+
+    def enable_account(self):
+        """
+        Enable the user's account.
+         :return: A message indicating the success or failure of the operation.
+        """
+        if self.user_data['user_account_status'] != 'disabled':
+            return "Your account is already active."
+        # Update the user's account status in the database
+        self.db.update_user_account_status(self.user_id, 'active')
+        return "Account enabled successfully."
+
+
+if __name__ == "__main__":
+    # Example usage
+    account_settings = AccountSettings(user_id=1)
+    print(account_settings.change_password("old_password", "new_password"))
+    print(account_settings.update_account_settings({"user_timezone": "UTC", "user_language": "en"}))
+    print(account_settings.upgrade_account("premium"))
+    print(account_settings.disable_account())
+    print(account_settings.enable_account())

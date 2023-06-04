@@ -5,7 +5,7 @@ import time
 import datetime
 import traceback
 from error_handling import ErrorHandling
-
+from config import DATABASE_USER, DATABASE_PASSWORD
 
 class Debug:
     def __init__(self):
