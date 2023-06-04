@@ -11,15 +11,15 @@ API_KEY_1 = os.environ.get("API_KEY_1", "your_api_key_1")
 API_KEY_2 = os.environ.get("API_KEY_2", "your_api_key_2")
 
 # Database Configuration
-DATABASE_HOST = os.environ.get("DATABASE_HOST", "your_database_host")
-DATABASE_PORT = os.environ.get("DATABASE_PORT", "your_database_port")
-DATABASE_NAME = os.environ.get("DATABASE_NAME", "your_database_name")
-DATABASE_USER = os.environ.get("DATABASE_USER", "your_database_user")
-DATABASE_PASSWORD = os.environ.get("DATABASE_PASSWORD", "your_database_password")
+DATABASE_HOST = os.environ.get("DATABASE_HOST", "localhost")
+DATABASE_PORT = os.environ.get("DATABASE_PORT", 3306)
+DATABASE_NAME = os.environ.get("DATABASE_NAME", "AmaryllisAI")
+DATABASE_USER = os.environ.get("DATABASE_USER", "root")
+DATABASE_PASSWORD = os.environ.get("DATABASE_PASSWORD", "@$_wvHDyZAm_")
 
 # Email Configuration
-EMAIL_API_KEY = os.environ.get("EMAIL_API_KEY", "your_email_api_key")
-EMAIL_FROM = os.environ.get("EMAIL_FROM", "your_email_from_address")
+EMAIL_API_KEY = os.environ.get("EMAIL_API_KEY", ";Ab0(p+}xP)9")
+EMAIL_FROM = os.environ.get("EMAIL_FROM", "AI@Amaryllis.com")
 
 # Twilio Configuration
 TWILIO_ACCOUNT_SID = os.environ.get("TWILIO_ACCOUNT_SID", "your_twilio_account_sid")
