@@ -1,20 +1,42 @@
 # legal_restrictions.py
 import re
 import json
+import requests
+from database import Database
+from config import DATABASE_HOST, DATABASE_PORT, DATABASE_NAME, DATABASE_USER, DATABASE_PASSWORD
+from config import IP_GEOLOCATION_API_KEY
 
 
 class LegalRestrictions:
     def __init__(self):
+        self.db = Database(DATABASE_HOST, DATABASE_PORT, DATABASE_NAME, DATABASE_USER, DATABASE_PASSWORD)
         self.restricted_actions = self.load_restricted_actions()
 
     def load_restricted_actions(self):
         """
-        Load restricted actions from a JSON file or other data source.
-        This file should contain a list of actions that the chatbot is not allowed to perform.
+        Load restricted actions from the restricted_actions table.
         """
-        with open('restricted_actions.json', 'r') as file:
-            restricted_actions = json.load(file)
-        return restricted_actions
+        restricted_actions = self.db.fetch_all("SELECT action FROM restricted_actions")
+        return [action[0] for action in restricted_actions]
+
+    def get_local_laws(self, user_ip):
+        """
+        Fetch local laws based on the user's IP address.
+        """
+        url = f"https://api.ipgeolocation.io/ipgeo?apiKey={IP_GEOLOCATION_API_KEY}&ip={user_ip}"
+        response = requests.get(url)
+        if response.status_code == 200:
+            data = response.json()
+            country = data.get("country_name", "")
+            # Fetch local laws based on the country
+            local_laws = self.db.fetch_all("SELECT restricted_action FROM local_laws WHERE country = %s", (country,))
+            # Insert local laws into the restricted_actions table
+            for law in local_laws:
+                self.db.execute("INSERT INTO restricted_actions (action) VALUES (%s)", (law[0],))
+            # Reload restricted actions
+            self.restricted_actions = self.load_restricted_actions()
+        else:
+            print("Error fetching IP Geolocation data")
 
     def is_action_legal(self, action):
         """

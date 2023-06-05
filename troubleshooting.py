@@ -1,15 +1,10 @@
 # troubleshooting.py
-import os
-import sys
-import time
-import datetime
-import json
 import logging
 
-from user_interface import UserInterface
-from error_handling import ErrorHandling
 from backup import Backup
 from debug import Debug
+from error_handling import ErrorHandling
+from user_interface import UserInterface
 
 
 class Troubleshooting:
@@ -82,17 +77,15 @@ class Troubleshooting:
         if manual_resolve:
             self.manual_resolution(error_code)
 
+    # Add resolution methods for known issues below.
+    # Replace the example method with actual resolution methods for known issues.
     def example_resolution_method(self):
-        # This is an example of a resolution method that can be called by attempt_auto_resolution.
-        # Replace this with actual resolution methods for known issues.
         try:
             # Attempt to resolve the issue here.
             return True
         except Exception as e:
             self.log_error(f"Error in example_resolution_method: {str(e)}")
             return False
-    # Add more resolution methods for known issues below.
-
 
 if __name__ == "__main__":
     troubleshooting = Troubleshooting()

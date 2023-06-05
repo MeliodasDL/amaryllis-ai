@@ -3,11 +3,12 @@ import hashlib
 import os
 import json
 from encryption import Encryption
+import config  # Import the config module
 
 
 class Security:
     def __init__(self):
-        self.encryption = Encryption()
+        self.encryption = Encryption(config.ENCRYPTION_KEY)  # Use the encryption key from config
 
     def hash_password(self, password):
         """

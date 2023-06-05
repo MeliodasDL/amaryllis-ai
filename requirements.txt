@@ -1,5 +1,7 @@
 mysql
-mysql-connector-python
+mysql.connector
+cython
+mysql-connector-python==8.0.25
 requests
 Pillow
 tensorflow==2.3.1
@@ -25,3 +27,5 @@ wxPython
 cryptography
 setuptools
 opencv-python
+stripe
+paypalrestsdk

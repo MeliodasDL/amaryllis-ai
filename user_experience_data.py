@@ -1,31 +1,21 @@
-# user_experience_data.py
-import json
-import os
-
+import mysql.connector
+import config
 
 class UserExperienceData:
-    def __init__(self, data_file="user_experience_data.json"):
-        self.data_file = data_file
-        self.user_experience_data = self.load_user_experience_data()
+    def __init__(self):
+        self.db_connection = self.connect_to_database()
 
-    def load_user_experience_data(self):
+    def connect_to_database(self):
         """
-        Load user experience data from a JSON file or other data source.
+        Connect to the MySQL database using the configuration settings from config.py.
         """
-        if not os.path.exists(self.data_file):
-            with open(self.data_file, "w") as file:
-                json.dump({}, file)
-
-        with open(self.data_file, "r") as file:
-            user_experience_data = json.load(file)
-        return user_experience_data
-
-    def save_user_experience_data(self):
-        """
-        Save user experience data to a JSON file or other data source.
-        """
-        with open(self.data_file, "w") as file:
-            json.dump(self.user_experience_data, file)
+        connection = mysql.connector.connect(
+            host=config.DATABASE_HOST,
+            user=config.DATABASE_USER,
+            password=config.DATABASE_PASSWORD,
+            database=config.DATABASE_NAME
+        )
+        return connection
 
     def store_user_experience(self, user_id, experience_data):
         """
@@ -34,10 +24,11 @@ class UserExperienceData:
         user_id (str): The unique identifier for the user.
         experience_data (dict): The experience data to store for the user.
         """
-        if user_id not in self.user_experience_data:
-            self.user_experience_data[user_id] = []
-        self.user_experience_data[user_id].append(experience_data)
-        self.save_user_experience_data()
+        cursor = self.db_connection.cursor()
+        query = "INSERT INTO user_experience_data (user_id, interaction, content, response_time, sentiment) VALUES (%s, %s, %s, %s, %s)"
+        values = (user_id, experience_data["interaction"], experience_data["content"], experience_data["response_time"], experience_data["sentiment"])
+        cursor.execute(query, values)
+        self.db_connection.commit()
 
     def get_user_experience(self, user_id):
         """
@@ -47,8 +38,12 @@ class UserExperienceData:
          Returns:
         list: A list of experience data for the specified user.
         """
-        return self.user_experience_data.get(user_id, [])
-
+        cursor = self.db_connection.cursor()
+        query = "SELECT interaction, content, response_time, sentiment FROM user_experience_data WHERE user_id = %s"
+        cursor.execute(query, (user_id,))
+        result = cursor.fetchall()
+        experience_data = [{"interaction": row[0], "content": row[1], "response_time": row[2], "sentiment": row[3]} for row in result]
+        return experience_data
 
 if __name__ == "__main__":
     user_experience_data = UserExperienceData()

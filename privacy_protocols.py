@@ -1,7 +1,7 @@
 # privacy_protocols.py
 import hashlib
-import json
 from cryptography.fernet import Fernet
+from config import get_config_value  # Import the get_config_value function
 
 
 class PrivacyProtocols:
@@ -11,11 +11,10 @@ class PrivacyProtocols:
 
     def load_encryption_key(self):
         """
-        Load the encryption key from a file or other data source.
+        Load the encryption key from the config.py file.
         This key will be used for encrypting and decrypting user data.
         """
-        with open('encryption_key.key', 'r') as file:
-            encryption_key = file.read()
+        encryption_key = get_config_value("ENCRYPTION_KEY")
         return encryption_key.encode()
 
     def hash_password(self, password):

@@ -3,12 +3,16 @@ import os
 import sys
 import time
 import random
-import cv2
+import opencv
 import numpy as np
 import tensorflow as tf
 import moviepy.editor as mp
 from PIL import Image
+from config import get_config_value
 
+
+# Get the necessary configuration values
+VIDEO_OUTPUT_PATH = get_config_value("VIDEO_OUTPUT_PATH", "generated_videos")
 
 class VideoGeneration:
     def __init__(self, video_name, video_quality):
@@ -70,7 +74,7 @@ class VideoGeneration:
         """
         # Define the output file name and path
         output_file_name = f"{self.video_name}_{self.video_quality}.mp4"
-        output_file_path = os.path.join("generated_videos", output_file_name)
+        output_file_path = os.path.join(VIDEO_OUTPUT_PATH, output_file_name)
         # TODO: Save the video to the output_file_path
         # example code:
         os.rename(f"{self.video_name}_{self.video_quality}.mp4", output_file_path)
@@ -81,7 +85,7 @@ class VideoGeneration:
         """
         # TODO: Return the generated video as a video object or a file path
         # example code:
-        return mp.VideoFileClip(f"generated_videos/{self.video_name}_{self.video_quality}.mp4")
+        return mp.VideoFileClip(os.path.join(VIDEO_OUTPUT_PATH, f"{self.video_name}_{self.video_quality}.mp4"))
 
 
 if __name__ == "__main__":

@@ -45,7 +45,7 @@ def run_application():
     debug = Debug()
     security = Security()
     encryption = Encryption()
-    user_data = UserData(database=database)
+    user_data = UserData()
     error_handling = ErrorHandling()
     update = Update()
     feedback = Feedback()

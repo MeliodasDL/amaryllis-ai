@@ -1,62 +1,65 @@
 # user_data.py
-import os
-import json
-
+import mysql.connector
+from config import get_config_value
 
 class UserData:
-    def __init__(self, data_file="user_data.json"):
-        self.data_file = data_file
-        self.data = self.load_data()
+    def __init__(self):
+        self.connection = self.connect_to_database()
 
-    def load_data(self):
+    def connect_to_database(self):
         """
-        Loads user data from the data file or creates a new file if it doesn't exist.
+        Connects to the MySQL database.
         """
-        if os.path.exists(self.data_file):
-            with open(self.data_file, "r") as file:
-                data = json.load(file)
-        else:
-            data = {}
-            with open(self.data_file, "w") as file:
-                json.dump(data, file)
-        return data
+        connection = mysql.connector.connect(
+            host=get_config_value("DATABASE_HOST"),
+            user=get_config_value("DATABASE_USER"),
+            password=get_config_value("DATABASE_PASSWORD"),
+            database=get_config_value("DATABASE_NAME")
+        )
+        return connection
 
-    def save_data(self):
-        """
-        Saves the current user data to the data file.
-        """
-        with open(self.data_file, "w") as file:
-            json.dump(self.data, file)
-
-    def add_user(self, user_id, user_data):
+    def add_user(self, user_data):
         """
         Adds a new user to the data.
         """
-        self.data[user_id] = user_data
-        self.save_data()
+        cursor = self.connection.cursor()
+        query = "INSERT INTO users (user_name, user_email, user_password, user_nickname, user_timezone, user_language, user_notification_preference, user_gender_preference, user_accent_preference, user_account_type, user_account_status) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+        values = (user_data["user_name"], user_data["user_email"], user_data["user_password"], user_data["user_nickname"], user_data["user_timezone"], user_data["user_language"], user_data["user_notification_preference"], user_data["user_gender_preference"], user_data["user_accent_preference"], user_data["user_account_type"], user_data["user_account_status"])
+        cursor.execute(query, values)
+        self.connection.commit()
 
     def update_user(self, user_id, user_data):
         """
         Updates an existing user's data.
         """
-        if user_id in self.data:
-            self.data[user_id].update(user_data)
-            self.save_data()
+        cursor = self.connection.cursor()
+        query = "UPDATE users SET "
+        values = []
+        for key, value in user_data.items():
+            query += f"{key} = %s, "
+            values.append(value)
+        query = query.rstrip(", ") + " WHERE user_id = %s"
+        values.append(user_id)
+        cursor.execute(query, values)
+        self.connection.commit()
 
     def get_user(self, user_id):
         """
         Retrieves user data for the given user ID.
         """
-        return self.data.get(user_id, None)
+        cursor = self.connection.cursor(dictionary=True)
+        query = "SELECT * FROM users WHERE user_id = %s"
+        cursor.execute(query, (user_id,))
+        return cursor.fetchone()
 
     def delete_user(self, user_id):
         """
         Deletes a user's data.
         """
-        if user_id in self.data:
-            del self.data[user_id]
-            self.save_data()
-
+        cursor = self.connection.cursor()
+        query = "DELETE FROM users WHERE user_id = %s"
+        cursor.execute(query, (user_id,))
+        self.connection.commit()
 
 if __name__ == "__main__":
     user_data = UserData()
@@ -72,13 +75,10 @@ if __name__ == "__main__":
         "user_gender_preference": "male",
         "user_accent_preference": "British",
         "user_account_type": "free",
-        "user_account_status": "active",
-        "user_experience_data": {},
-        "user_feedback": [],
-        "user_bug_report": []
+        "user_account_status": "active"
     }
-    user_id = "user_001"
-    user_data.add_user(user_id, new_user)
+    user_data.add_user(new_user)
+    user_id = 1  # Replace with the actual user_id
     print("User added:", user_data.get_user(user_id))
     updated_data = {"user_nickname": "John"}
     user_data.update_user(user_id, updated_data)

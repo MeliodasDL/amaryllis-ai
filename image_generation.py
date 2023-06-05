@@ -1,20 +1,18 @@
 # image_generation.py
-import os
-import sys
 import random
+import sys
 import numpy as np
-import pandas as pd
-import matplotlib.pyplot as plt
-import seaborn as sns
-from PIL import Image, ImageDraw, ImageFont
-from tensorflow.keras.models import load_model
-from tensorflow.keras.preprocessing.image import load_img, img_to_array
+from PIL import Image
+import keras
+from config import get_config_value
+
 
 class ImageGeneration:
     def __init__(self):
         self.image_name = None
         self.image_quality = None
-        self.image_model_path = "path/to/image/generation/model"
+        # Replace the hardcoded image_model_path with a value from the configuration settings
+        self.image_model_path = get_config_value("IMAGE_MODEL_PATH")
         self.image_model = self.load_image_model()
         self.amaryllis_theme_colors = ["#hex_color1", "#hex_color2", "#hex_color3"]
 
@@ -23,7 +21,7 @@ class ImageGeneration:
         Load the image generation model from the specified path.
         """
         try:
-            return load_model(self.image_model_path)
+            return keras.models.load_model(self.image_model_path)
         except Exception as e:
             print(f"Error loading image generation model: {e}")
             sys.exit(1)
@@ -74,7 +72,8 @@ class ImageGeneration:
         Save the generated image with the specified quality.
         """
         try:
-            image.save(self.image_name, quality=self.image_quality)
+            with open(self.image_name, 'wb') as f:
+                image.save(f, quality=self.image_quality)
         except Exception as e:
             print(f"Error saving generated image: {e}")
             sys.exit(1)
@@ -84,8 +83,8 @@ class ImageGeneration:
         Display the generated image.
         """
         try:
-            image = Image.open(image_name)
-            image.show()
+            with Image.open(image_name) as image:
+                image.show()
         except Exception as e:
             print(f"Error displaying generated image: {e}")
             sys.exit(1)

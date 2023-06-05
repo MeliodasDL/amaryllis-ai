@@ -10,6 +10,9 @@ APP_VERSION = "1.0.0"
 API_KEY_1 = os.environ.get("API_KEY_1", "your_api_key_1")
 API_KEY_2 = os.environ.get("API_KEY_2", "your_api_key_2")
 
+# Encryption Configuration
+ENCRYPTION_KEY = os.environ.get("ENCRYPTION_KEY", "your_encryption_key")
+
 # Database Configuration
 DATABASE_HOST = os.environ.get("DATABASE_HOST", "localhost")
 DATABASE_PORT = os.environ.get("DATABASE_PORT", 3306)
@@ -26,9 +29,18 @@ TWILIO_ACCOUNT_SID = os.environ.get("TWILIO_ACCOUNT_SID", "your_twilio_account_s
 TWILIO_AUTH_TOKEN = os.environ.get("TWILIO_AUTH_TOKEN", "your_twilio_auth_token")
 TWILIO_PHONE_NUMBER = os.environ.get("TWILIO_PHONE_NUMBER", "your_twilio_phone_number")
 
+# Stripe Configuration
+STRIPE_API_KEY = os.environ.get("STRIPE_API_KEY", "your_stripe_api_key")
+
+# PayPal Configuration
+PAYPAL_CLIENT_ID = os.environ.get("PAYPAL_CLIENT_ID", "your_paypal_client_id")
+PAYPAL_CLIENT_SECRET = os.environ.get("PAYPAL_CLIENT_SECRET", "your_paypal_client_secret")
+
 # Other Configuration
 # Add any other configuration settings here as needed.
-
+UPDATE_URL = "https://example.com/update"
+IMAGE_MODEL_PATH = os.environ.get("IMAGE_MODEL_PATH", "path/to/image/generation/model")
+IP_GEOLOCATION_API_KEY = os.environ.get("IP_GEOLOCATION_API_KEY", "your_ip_geolocation_api_key")
 
 def get_config_value(key, default=None):
     """

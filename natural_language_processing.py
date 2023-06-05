@@ -18,21 +18,31 @@ class NaturalLanguageProcessing:
         self.translator = Translator()
         self.speech_recognizer = Recognizer()
         self.text_to_speech_engine = pyttsx3.init()
-        self.nlp_model = self.load_nlp_model()
+        self.nlp_model = self.load_nlp_model(user_language)
 
-    def load_nlp_model(self):
+    def load_nlp_model(self, user_language):
         """
-        Load the pre-trained natural language processing model.
+        Load the pre-trained natural language processing model based on the user's language preference.
         """
         nlp_model = None
-        return spacy.load("en_core_web_sm")
+        if user_language == "en":
+            return spacy.load("en_core_web_sm")
+        # Add more conditions to load models for other languages
+        # Example:
+        # elif user_language == "es":
+        #     return spacy.load("es_core_news_sm")
+        else:
+            raise ValueError("Unsupported language")
 
     def process_text(self, user_input):
         """
         Process the given text input and return a response.
         """
-        # TODO: Process the text input using the NLP model and return a response
-        # Placeholder replaced with functional code
+        if self.nlp_model is None:
+            # Handle the case when the NLP model is not available for the user's language
+            # You can return a default response or implement another method to process the text
+            return "I'm sorry, I cannot understand your language."
+
         doc = self.nlp_model(user_input)
         return doc[0].text
 

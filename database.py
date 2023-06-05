@@ -27,7 +27,7 @@ class Database:
             if not self.connection.is_connected():
                 self.create_database()
         except Error as e:
-            print(f"Error: {e}")
+            print("Error: {}".format(e))
 
     # Other methods remain the same
 
@@ -57,7 +57,7 @@ if __name__ == "__main__":
     def create_user_table(self):
         cursor = self.connection.cursor()
         cursor.execute("""
-            CREATE TABLE IF NOT EXISTS user (
+            CREATE TABLE IF NOT EXISTS users (
                 user_id INTEGER PRIMARY KEY AUTO_INCREMENT,
                 user_name VARCHAR(255) NOT NULL,
                 user_email VARCHAR(255) UNIQUE NOT NULL,

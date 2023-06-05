@@ -1,15 +1,17 @@
 # update.py
-import os
-import sys
-import time
 import datetime
+import os
+import shutil
+
 import requests
+
+import config
 
 
 class Update:
     def __init__(self, current_version):
         self.current_version = current_version
-        self.update_url = "https://example.com/update"  # Replace with the real update URL
+        self.update_url = config.get_config_value("UPDATE_URL")
 
     def check_for_updates(self):
         """
@@ -17,13 +19,17 @@ class Update:
         """
         try:
             response = requests.get(self.update_url)
+            response.raise_for_status()
             latest_version = response.json()["latest_version"]
             if self.current_version < latest_version:
                 return True, latest_version
             else:
                 return False, None
-        except Exception as e:
+        except requests.exceptions.RequestException as e:
             print(f"Error checking for updates: {e}")
+            return False, None
+        except ValueError:
+            print("Error parsing the update server response.")
             return False, None
 
     def download_update(self, latest_version):
@@ -93,9 +99,19 @@ class Update:
             print("No updates available.")
             return False
 
+    def clean_up(self, backup_folder, update_files_folder):
+        """
+        Remove the backup folder and update files folder after a successful or failed update.
+        """
+        try:
+            shutil.rmtree(backup_folder)
+            shutil.rmtree(update_files_folder)
+        except Exception as e:
+            print(f"Error cleaning up after update: {e}")
+
 
 if __name__ == "__main__":
-    current_version = 1.0  # Replace with the current version of your application
+    current_version = config.get_config_value("APP_VERSION")
     updater = Update(current_version)
     if updater.perform_update():
         print("Update process completed successfully.")

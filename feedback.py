@@ -4,6 +4,7 @@ import sys
 import json
 import datetime
 import requests
+from config import EMAIL_API_KEY, EMAIL_FROM  # Import the necessary variables from config.py
 
 
 class Feedback:
@@ -51,7 +52,6 @@ class Feedback:
         except Exception as e:
             print(e)
 
-
 def collect_feedback(user_id):
     """
     Collect feedback from the user.
@@ -85,8 +85,8 @@ if __name__ == "__main__":
     # Replace with your actual database object and email settings
     database = None
     email_settings = {
-        'from_email': 'noreply@example.com',
-        'to_email': 'feedback@example.com',
+        'from_email': EMAIL_FROM,  # Replace with the actual email from config.py
+        'to_email': 'Admin@fultonarts.com',
         'subject': 'Amaryllis AI Feedback'
     }
     main(database, email_settings)

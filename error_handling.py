@@ -1,11 +1,9 @@
-# feedback.py
-import os
-import sys
-import json
 import datetime
-import requests
+import json
+import os
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
+from config import EMAIL_FROM
 
 
 class ErrorHandling:
@@ -101,7 +99,7 @@ if __name__ == "__main__":
 
     database = Database()
     email_settings = {
-        'from_email': 'noreply@example.com',
+        'from_email': EMAIL_FROM,
         'to_email': 'feedback@example.com',
         'subject': 'Amaryllis AI Feedback'
     }
